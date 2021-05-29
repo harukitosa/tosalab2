@@ -7,10 +7,22 @@ body {
 }
 
 a {
-  color: inherit;
+  color: #1A0DAB !important;
   text-decoration: none;
 }
 
 * {
   box-sizing: border-box;
+  line-height: 2;
+}
+
+code {
+  overflow: auto !important;
+}
+
+h2, h3, h4, h5 {
+  font-size: 24px !important;
+  font-weight: 900 !important;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }

@@ -3,8 +3,10 @@ import matter from "gray-matter"
 import fs from "fs"
 import type { PostPageProps } from "../../types/PostPage"
 import { GetStaticPropsContext } from 'next'
-import MarkdownIt from "markdown-it"
-import { Container } from "@chakra-ui/react"
+import { Container, Box, Heading } from "@chakra-ui/react"
+import MarkdownIt from "markdown-it";
+import hljs from 'highlight.js';
+import 'highlight.js/styles/github.css';
 
 export default function PostPage(props: PostPageProps) {
   return (
@@ -16,35 +18,50 @@ export default function PostPage(props: PostPageProps) {
       </Head>
 
       <main>
-        <Container padding="2">
-            <h1>{props.title}</h1>
-            <h2>hoge</h2>
-            <div className="text" dangerouslySetInnerHTML={{__html: props.content}}></div>
-        </Container>
+        <Post {...props} />
       </main>
-
       <footer>
-
       </footer>
     </div>
   )
 }
 
-function isValidContext(arg: GetStaticPropsContext): arg is GetStaticPropsContext {
-    if (arg.params == null) return false;
-    return typeof arg.params.id === "string"
+function Post(props: PostPageProps) {
+
+    return (
+       <Box w="100vw">
+        <Container padding="2">
+            <Heading as="h2" size="2xl">
+                {props.title}
+            </Heading>
+            <Box pt="12">
+                <div dangerouslySetInnerHTML={{ __html: props.content}} />
+            </Box>
+        </Container>
+      </Box>
+    )
 }
+
 
 export async function getStaticProps(context:GetStaticPropsContext) {
     if (context.params == null || typeof context.params.id !== "string") return;
     const path = "./posts/";
+    const markdownIt = new MarkdownIt({html: true, highlight: function (str, lang) {
+        if (lang && hljs.getLanguage(lang)) {
+          try {
+            return '<pre class="hljs"><code>' +
+                   hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
+                   '</code></pre>';
+          } catch (__) {}
+        }
+        return '<pre class="hljs"><code>' + str + '</code></pre>';
+      }});
     const file = fs.readFileSync(path + context.params.id + ".md", "utf-8");
     const content = matter(file);
-    const markdown = new MarkdownIt();
-    const parsedContent = markdown.render(content.content);
+    const post = markdownIt.render(content.content);
     const blogData: PostPageProps = {
         title: content.data.title,
-        content: parsedContent,
+        content: post,
     }
 
     return {
@@ -57,15 +74,15 @@ const isUndefined = (content: any) => content == null;
 export async function getStaticPaths() {
     const path = "./posts/";
     const files = fs.readdirSync(path);
-    const paths: { params: { id: string } }[] = [];
-    files.forEach((fileName) => {
-        const file = fs.readFileSync(path + fileName, "utf-8");
-        const content = matter(file);
-        const slug = content.data.slug;
-        if (!isUndefined(slug)) {
-            paths.push({params: { id: slug }})
-        }
-    })
+    const paths = files
+        .map(fileName => {
+            const file = fs.readFileSync(path + fileName, "utf-8");
+            const content = matter(file);
+            const slug: string = content.data.slug; 
+            if (!isUndefined(slug)) return {params: {id: slug}}
+            return null;
+        })
+        .filter(v => v);
     return {
         paths: paths,
         fallback: false

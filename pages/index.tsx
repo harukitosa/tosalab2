@@ -1,9 +1,12 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import matter from "gray-matter"
+import fs from "fs"
+import { GetStaticPropsContext } from 'next'
+import { Container, Box, Heading } from "@chakra-ui/react";
+import Link from 'next/link';
 
-
-export default function Home() {
+export default function Home(props: HomePageProps) {
+  console.log(props);
   return (
     <div>
       <Head>
@@ -13,7 +16,17 @@ export default function Home() {
       </Head>
 
       <main>
-        
+        {props.contents.map(item => {
+            return (
+              <Box w="100vw">
+                <Link href={"/posts/" + item?.id}>
+                <Container padding="2">
+                  {item?.title}
+                </Container>           
+                </Link>
+              </Box>
+            );
+        })}
       </main>
 
       <footer>
@@ -21,4 +34,31 @@ export default function Home() {
       </footer>
     </div>
   )
+}
+
+interface HomePageProps {
+  contents: ({
+    id: string;
+    title: any;
+  } | null)[]
+}
+
+export async function getStaticProps(context:GetStaticPropsContext) {
+  const path = "./posts/";
+  const files = fs.readdirSync(path);
+  const contents = files
+      .map(fileName => {
+          const file = fs.readFileSync(path + fileName, "utf-8");
+          const content = matter(file);
+          const slug: string = content.data.slug; 
+          if (slug != null) return {id: slug, title: content.data.title}
+          return null;
+      })
+      .filter(v => v);
+  console.log(contents);
+  return {
+      props: {
+        contents
+      },
+  }
 }
