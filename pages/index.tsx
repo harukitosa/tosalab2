@@ -1,12 +1,12 @@
 import Head from 'next/head'
 import matter from "gray-matter"
 import fs from "fs"
-import { GetStaticPropsContext } from 'next'
-import { Container, Box, Heading, Text, Tag } from "@chakra-ui/react";
+import { Container, Box, Text, Tag } from "@chakra-ui/react";
 import Link from 'next/link';
+import {Post, HomePageProps} from "../types/type";
+import { getAllPostsData } from '../utils/getPostsData';
 
 export default function Home(props: HomePageProps) {
-  console.log(props);
   return (
     <div>
       <Head>
@@ -17,7 +17,10 @@ export default function Home(props: HomePageProps) {
 
       <main>
         {props.contents.map(item => {
-            return PostList(item);
+            return <PostItem 
+                {...item}
+                key={"post-key-" + item.data.slug}
+            />;
         })}
       </main>
       <footer>
@@ -27,15 +30,15 @@ export default function Home(props: HomePageProps) {
   )
 }
 
-function PostList(props: Post) {
+function PostItem(props: Post) {
   return (
-    <Box w="100vw">
-      <Link href={"/posts/" + props.id}>
+    <Box w="100vw" key={props.data.slug}>
+      <Link href={"/posts/" + props.data.slug}>
         <Container padding="2">
-          <Text color="gray.600">{props.date}</Text>
-          <Text fontWeight="bold" _hover={{ color: "#1A0DAB"}}>{props.title}</Text>
-          {props.tags != null && props.tags.map(item => {
-            return <Tag marginRight="1">{item}</Tag>
+          <Text color="gray.600">{props.data.date}</Text>
+          <Text fontWeight="bold" _hover={{ color: "#1A0DAB"}}>{props.data.title}</Text>
+          {props.data.tags != null && props.data.tags.map(item => {
+            return <Tag marginRight="1" key={item}>{item}</Tag>
           })}
         </Container>           
       </Link>
@@ -43,50 +46,13 @@ function PostList(props: Post) {
   );
 }
 
-interface Post {
-  id: string;
-  title: string;
-  date: string;
-  tags: string[];
-}
 
-interface HomePageProps {
-  contents: ({
-    id: string;
-    title: string;
-    date: string;
-    tags: string[];
-  })[]
-}
-
-export async function getStaticProps(context:GetStaticPropsContext) {
+export async function getStaticProps() {
   const path = "./posts/";
-  const files = fs.readdirSync(path);
-  const contents = files
-      .map(fileName => {
-          const file = fs.readFileSync(path + fileName, "utf-8");
-          const content = matter(file);
-          const slug: string = content.data.slug; 
-          if (slug != null) return {
-            id: slug, 
-            title: content.data.title, 
-            date: content.data.date,
-            tags: content.data.tags,
-          }
-          return null;
-      })
-      .filter(v => v)
-      .sort((a, b) => {
-        const date = new Date(a?.date);
-        const date1 = new Date(b?.date);
-        if (date > date1) return -1;
-        else return 1;
-      })
-      console.log(contents);
-
+  const contents = getAllPostsData(path);
   return {
       props: {
         contents
-      },
+      }
   }
 }
