@@ -1,6 +1,12 @@
 import Head from 'next/head'
+import matter from "gray-matter"
+import fs from "fs"
+import type { PostPageProps } from "../../types/PostPage"
+import { GetStaticPropsContext } from 'next'
+import MarkdownIt from "markdown-it"
+import { Container } from "@chakra-ui/react"
 
-export default function PostPage({ foo }) {
+export default function PostPage(props: PostPageProps) {
   return (
     <div>
       <Head>
@@ -10,7 +16,11 @@ export default function PostPage({ foo }) {
       </Head>
 
       <main>
-        <h2>{foo}</h2>
+        <Container padding="2">
+            <h1>{props.title}</h1>
+            <h2>hoge</h2>
+            <div className="text" dangerouslySetInnerHTML={{__html: props.content}}></div>
+        </Container>
       </main>
 
       <footer>
@@ -20,22 +30,44 @@ export default function PostPage({ foo }) {
   )
 }
 
-export async function getStaticProps() {
-    const foo = 'Hello'
+function isValidContext(arg: GetStaticPropsContext): arg is GetStaticPropsContext {
+    if (arg.params == null) return false;
+    return typeof arg.params.id === "string"
+}
+
+export async function getStaticProps(context:GetStaticPropsContext) {
+    if (context.params == null || typeof context.params.id !== "string") return;
+    const path = "./posts/";
+    const file = fs.readFileSync(path + context.params.id + ".md", "utf-8");
+    const content = matter(file);
+    const markdown = new MarkdownIt();
+    const parsedContent = markdown.render(content.content);
+    const blogData: PostPageProps = {
+        title: content.data.title,
+        content: parsedContent,
+    }
 
     return {
-        props: { foo },
+        props: blogData,
     }
 }
 
+const isUndefined = (content: any) => content == null;
 
 export async function getStaticPaths() {
+    const path = "./posts/";
+    const files = fs.readdirSync(path);
+    const paths: { params: { id: string } }[] = [];
+    files.forEach((fileName) => {
+        const file = fs.readFileSync(path + fileName, "utf-8");
+        const content = matter(file);
+        const slug = content.data.slug;
+        if (!isUndefined(slug)) {
+            paths.push({params: { id: slug }})
+        }
+    })
     return {
-        paths: [
-            { params: { id: 'my-first-post' } },
-            { params: { id: 'my-second-post' } },
-            { params: { id: 'my-third-post' } }, 
-        ],
+        paths: paths,
         fallback: false
     }
 }
