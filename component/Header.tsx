@@ -5,7 +5,7 @@ export function Header(props: HeaderProps) {
       <div>
         <Box fontWeight="bold" bg="white" w="100%" p={4} color="black">
             <Link href={props.url}>
-              TosaLab
+              tosa.dev
             </Link>
         </Box>
       </div>
