@@ -5,6 +5,7 @@ import type { PostPageProps } from "../../types/PostPage"
 import { GetStaticPropsContext } from 'next'
 import { Container, Box, Heading } from "@chakra-ui/react"
 import MarkdownIt from "markdown-it";
+// @ts-ignore
 import katex from "markdown-it-katex";
 import hljs from 'highlight.js';
 import 'highlight.js/styles/github.css';
