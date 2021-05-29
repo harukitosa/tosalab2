@@ -7,7 +7,7 @@ body {
 }
 
 a {
-  color: #1A0DAB !important;
+  color: #1A0DAB;
   text-decoration: none;
 }
 
@@ -17,8 +17,19 @@ a {
 }
 
 h2, h3, h4, h5 {
-  font-size: 24px !important;
-  font-weight: 900 !important;
+  font-weight: 900;
   padding-top: 8px;
   padding-bottom: 8px;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+h3 {
+  font-size: 22px;
+}
+
+img {
+  width: 100%;
 }

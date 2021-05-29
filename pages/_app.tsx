@@ -5,7 +5,7 @@ import { Header } from "../component/Header"
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-      <ChakraProvider>
+      <ChakraProvider resetCSS={false}>
         <Header url="/" />
         <Component {...pageProps} />
       </ChakraProvider>
