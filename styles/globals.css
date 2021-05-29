@@ -13,7 +13,11 @@ a {
 
 * {
   box-sizing: border-box;
-  line-height: 2;
+  line-height: 1.9;
+}
+
+span {
+  line-height: 1 !important;
 }
 
 h2, h3, h4, h5 {
