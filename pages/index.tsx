@@ -37,6 +37,7 @@ function PostItem(props: Post) {
         <Container padding="2">
           <Text color="gray.600">{props.data.date}</Text>
           <Text fontWeight="bold" _hover={{ color: "#1A0DAB"}}>{props.data.title}</Text>
+          <Text>{props.data.description}</Text>
           {props.data.tags != null && props.data.tags.map(item => {
             return <Tag marginRight="1" key={item}>{item}</Tag>
           })}
