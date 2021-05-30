@@ -1,14 +1,25 @@
-import { Box } from "@chakra-ui/react"
+import { Box, Flex } from "@chakra-ui/react"
 import Link from 'next/link'
 export function Header(props: HeaderProps) {
     return (
-      <div>
+      <>
+      <Flex as="nav" position="fixed">
         <Link href={props.url}>
-          <Box fontWeight="bold" bg="white" w="100%" p={4} color="black">
+          <Box 
+            fontWeight="bold" 
+            bg="blue.800" 
+            w="100%" 
+            p={4}
+            pr={6} 
+            color="white" 
+            borderBottomRightRadius="50"
+          >
                 tosa.dev
           </Box>
         </Link>
-      </div>
+      </Flex>
+      <Box h="42"></Box>
+      </>
     );
 }
 
