@@ -3,10 +3,10 @@ import matter from "gray-matter"
 import fs from "fs"
 import type { PostPageProps, Post } from "../../types/type"
 import { GetStaticPropsContext } from 'next'
-import { Container, Box, Heading } from "@chakra-ui/react"
+import { Container, Box, Heading, Icon } from "@chakra-ui/react"
 import 'highlight.js/styles/github.css';
 import { renderMarkdown } from '../../utils/renderMarkdown'
-
+import { useRouter } from 'next/router';
 
 
 export default function PostPage(props: PostPageProps) {
@@ -18,12 +18,15 @@ export default function PostPage(props: PostPageProps) {
         <link rel="icon" href="/favicon.ico" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <meta name="description" content="サイトの説明文"/>
+        <meta name="description" content="とさの開発ブログ"/>
         <link rel="canonical" href="https://tosa.dev"/>
         <meta property="og:title" content={props.data.title}/>
         <meta property="og:type" content="blog"/>
-        {/* <meta property="og:url" content="http://xxx.xxx"/> */}
-        {/* <meta property="og:image" content="images/xxx.png"/> */}
+        <meta property="og:url" content={"https://tosa.dev" + useRouter().asPath}/>
+        <meta property="og:image" content={"https://tosa.dev/icon.jpeg"}/>
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@tosa_now" />
+        <meta name="twitter:player" content="@tosa_now" />
         <meta property="og:site_name" content="tosa.dev"/>
         <meta property="og:description" content={props.data.description}/>
       </Head>
