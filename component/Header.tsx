@@ -3,7 +3,7 @@ import Link from 'next/link'
 export function Header(props: HeaderProps) {
     return (
       <>
-      <Flex as="nav" position="fixed">
+      <Flex as="nav">
         <Link href={props.url}>
           <Box 
             fontWeight="bold" 
@@ -12,7 +12,6 @@ export function Header(props: HeaderProps) {
             p={4}
             pr={6} 
             color="white" 
-            borderBottomRightRadius="50"
           >
                 tosa.dev
           </Box>

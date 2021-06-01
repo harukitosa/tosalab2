@@ -16,15 +16,27 @@ export default function Home(props: HomePageProps) {
       </Head>
 
       <main>
-        {props.contents.map(item => {
-            return <PostItem 
-                {...item}
-                key={"post-key-" + item.data.slug}
-            />;
-        })}
+        <Container>
+          <h1>Tosa.dev</h1>
+          <p>人生の走馬灯の半分くらいPCの画面</p>
+          <p>.devドメインってなんかデブっていわれてるみたい</p>
+          <Box margin="auto" paddingBottom="10" marginTop="20">
+            <h3>Tags</h3>
+            {props.tags.map(tag => {
+              return <Tag margin="1" key={tag}>{tag}</Tag>
+            })}
+          </Box>
+          <h3>Posts</h3>
+          {props.contents.map(item => {
+              return <PostItem 
+                  {...item}
+                  key={"post-key-" + item.data.slug}
+              />;
+          })}
+        </Container>
+
       </main>
       <footer>
-
       </footer>
     </div>
   )
@@ -32,7 +44,7 @@ export default function Home(props: HomePageProps) {
 
 function PostItem(props: Post) {
   return (
-    <Box w="100vw" key={props.data.slug}>
+    <Box key={props.data.slug}>
       <Link href={"/posts/" + props.data.slug}>
         <Container padding="2">
           <Text color="gray.600">{props.data.date}</Text>
@@ -51,9 +63,19 @@ function PostItem(props: Post) {
 export async function getStaticProps() {
   const path = "./posts/";
   const contents = getAllPostsData(path);
+  const tagSet = contents
+                .reduce((acc:Set<string> , val) => {
+                  if (val.data.tags != null) {
+                    const tags = val.data.tags as string[];
+                    tags.forEach(item => acc.add(item));
+                  };
+                  return acc;
+                }, new Set<string>())
+  const tags = Array.from(tagSet);
   return {
       props: {
-        contents
+        contents,
+        tags
       }
   }
 }

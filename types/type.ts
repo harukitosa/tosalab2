@@ -16,4 +16,12 @@ export interface Post {
 
 export interface HomePageProps {
     contents: Post[]
+    tags: string[]
+}
+
+export interface HeadData {
+    title: string;
+    url: string;
+    image: string;
+    description: string;
 }
