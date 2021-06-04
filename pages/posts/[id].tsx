@@ -2,7 +2,7 @@ import matter from "gray-matter"
 import fs from "fs"
 import type { PostPageProps, Post } from "../../types/type"
 import { GetStaticPropsContext } from 'next'
-import { Container, Box, Heading, Icon } from "@chakra-ui/react"
+import { Container, Box, Heading, Icon, Link } from "@chakra-ui/react"
 import 'highlight.js/styles/github.css';
 import { renderMarkdown } from '../../utils/renderMarkdown'
 import { useRouter } from 'next/router';
@@ -25,7 +25,11 @@ export default function PostPage(props: PostPageProps) {
       </main>
 
       <footer>
-
+        <Container height="20">
+          <Link href="/">
+            Home...
+          </Link>
+        </Container>
       </footer>
     </div>
   )

@@ -19,7 +19,6 @@ export default function Home(props: HomePageProps) {
         <Container>
           <h1>Tosa.dev</h1>
           <p>人生の走馬灯の半分くらいPCの画面</p>
-          <p>.devドメインってなんかデブっていわれてるみたい</p>
           <Box margin="auto" paddingBottom="10" marginTop="20">
             <h3>Tags</h3>
             {props.tags.map(tag => {
