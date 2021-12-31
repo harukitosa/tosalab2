@@ -1,6 +1,6 @@
 ---
 title: "NTT Performance Tuning Challenge参加してきてサーバーがI'll (not) be backと行ったきり戻ってこなかった話"
-date: "2021-2-7"
+date: "2021-02-07"
 template: "post"
 draft: false
 slug: "ntt-performance-tuning"

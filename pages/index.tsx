@@ -63,6 +63,9 @@ function PostItem(props: Post) {
 export async function getStaticProps() {
   const path = "./posts/";
   const contents = getAllPostsData(path);
+  contents.forEach(item => {
+    console.log(item.data.slug)
+  })
   const tagSet = contents
                 .reduce((acc:Set<string> , val) => {
                   if (val.data.tags != null) {

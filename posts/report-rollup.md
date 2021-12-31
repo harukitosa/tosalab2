@@ -1,6 +1,6 @@
 ---
 title: "Rollup触ってみた"
-date: "2021-3-7"
+date: "2021-03-07"
 template: "post"
 draft: false
 slug: "report-rollup"

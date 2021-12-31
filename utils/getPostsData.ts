@@ -16,6 +16,6 @@ export function getAllPostsData(path: string) {
         .sort((a, b) => {
           const date = new Date(a?.data.date);
           const date1 = new Date(b?.data.date);
-          return date1.getTime() > date.getTime() ? 1 : -1;
+          return date1.getTime() - date.getTime();
     });
 }

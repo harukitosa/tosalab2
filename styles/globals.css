@@ -33,3 +33,7 @@ h3 {
 img {
   width: 100%;
 }
+
+p {
+  line-height: 1.75;
+}

@@ -1,6 +1,6 @@
 ---
-title: 2021年 StudentSalaryについて
-date: "2021-12-31"
+title: 2021年StudentSalaryについて
+date: "2021-12-30"
 template: "post"
 draft: false
 slug: "2021-student-salary"
