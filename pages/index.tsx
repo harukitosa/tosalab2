@@ -17,7 +17,7 @@ export default function Home(props: HomePageProps) {
 
       <main>
         <Container>
-          <h1>Tosa.dev</h1>
+          <h1>TOSA.DEV</h1>
           <p>悪の科学者を目指すブログ</p>
           <p>人生の走馬灯の半分くらいPCの画面</p>
           <Box margin="auto" paddingBottom="10" marginTop="20">
