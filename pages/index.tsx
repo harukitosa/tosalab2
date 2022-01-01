@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import matter from "gray-matter"
 import fs from "fs"
-import { Container, Box, Text, Tag } from "@chakra-ui/react";
+import { Container, Box, Text, Tag, Flex } from "@chakra-ui/react";
 import Link from 'next/link';
 import {Post, HomePageProps} from "../types/type";
 import { getAllPostsData } from '../utils/getPostsData';
@@ -21,12 +21,12 @@ export default function Home(props: HomePageProps) {
           <p>悪の科学者を目指すブログ</p>
           <p>人生の走馬灯の半分くらいPCの画面</p>
           <Box margin="auto" paddingBottom="10" marginTop="20">
-            <h3>Tags</h3>
+            <h3># Tags</h3>
             {props.tags.map(tag => {
               return <Tag margin="1" key={tag}>{tag}</Tag>
             })}
           </Box>
-          <h3>Posts</h3>
+          <h3># Posts</h3>
           {props.contents.map(item => {
               return <PostItem 
                   {...item}
@@ -46,11 +46,14 @@ function PostItem(props: Post) {
   return (
     <Box key={props.data.slug}>
       <Link href={"/posts/" + props.data.slug}>
-        <Container px="2">
-          <Text color="gray.400" fontWeight={"normal"} as="span">{props.data.date}</Text>
-          <Text fontWeight="bold" _hover={{ color: "#1A0DAB"}}>
+        <Container mx="1">
+          <Box>
+            <Text color="gray.300" fontWeight={"normal"} as="span">{props.data.date}</Text>
+          </Box>
+          <Text as="span" fontWeight="bold" _hover={{ color: "#1A0DAB"}}>
             {props.data.title}
           </Text>
+
           {/* <Text>{props.data.description}</Text>
           {props.data.tags != null && props.data.tags.map(item => {
             return <Tag marginRight="1" key={item}>{item}</Tag>

@@ -42,6 +42,7 @@ p {
 blockquote {
   position: relative;
   padding: 35px 15px 10px 15px;
+  margin: 15px 2px 10px 2px;
   box-sizing: border-box;
   font-style: italic;
   background: #f5f5f5;
