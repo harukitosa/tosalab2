@@ -38,7 +38,7 @@ export default function PostPage(props: PostPageProps) {
 function PostView(props: PostPageProps) {
     return (
        <Box w="100vw">
-        <Container padding="2" mx="2">
+        <Container padding="4">
             <Heading as="h2" size="2xl">
                 {props.data.title}
             </Heading>
