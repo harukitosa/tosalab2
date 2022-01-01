@@ -46,13 +46,15 @@ function PostItem(props: Post) {
   return (
     <Box key={props.data.slug}>
       <Link href={"/posts/" + props.data.slug}>
-        <Container padding="2">
-          <Text color="gray.600">{props.data.date}</Text>
-          <Text fontWeight="bold" _hover={{ color: "#1A0DAB"}}>{props.data.title}</Text>
-          <Text>{props.data.description}</Text>
+        <Container px="2">
+          <Text color="gray.400" fontWeight={"normal"} as="span">{props.data.date}</Text>
+          <Text fontWeight="bold" _hover={{ color: "#1A0DAB"}}>
+            {props.data.title}
+          </Text>
+          {/* <Text>{props.data.description}</Text>
           {props.data.tags != null && props.data.tags.map(item => {
             return <Tag marginRight="1" key={item}>{item}</Tag>
-          })}
+          })} */}
         </Container>           
       </Link>
     </Box>
