@@ -27,9 +27,7 @@ export default function PostPage(props: PostPageProps) {
       <footer>
         <Container height="20">
           <Link href="/">
-            <a>
-              Home...
-            </a>
+            Home...
           </Link>
         </Container>
       </footer>
