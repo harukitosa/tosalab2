@@ -3,7 +3,7 @@ import matter from "gray-matter"
 import fs from "fs"
 import { Container, Box, Text, Tag, Flex } from "@chakra-ui/react";
 import Link from 'next/link';
-import {Post, HomePageProps} from "../types/type";
+import { Post, HomePageProps } from "../types/type";
 import { getAllPostsData } from '../utils/getPostsData';
 
 export default function Home(props: HomePageProps) {
@@ -28,10 +28,10 @@ export default function Home(props: HomePageProps) {
           </Box>
           <h3># Posts</h3>
           {props.contents.map(item => {
-              return <PostItem 
-                  {...item}
-                  key={"post-key-" + item.data.slug}
-              />;
+            return <PostItem
+              {...item}
+              key={"post-key-" + item.data.slug}
+            />;
           })}
         </Container>
 
@@ -46,21 +46,23 @@ function PostItem(props: Post) {
   return (
     <Box key={props.data.slug}>
       <Link href={"/posts/" + props.data.slug}>
-        <Container mx="1">
-          <Box>
-            <Text color="gray.300" fontWeight={"normal"} as="span">{props.data.date}</Text>
-          </Box>
-          <Text as="span" fontWeight="bold" _hover={{ color: "#1A0DAB"}}>
-            {props.data.title}
-          </Text>
+        <a>
+          <Container mx="1">
+            <Box>
+              <Text color="gray.300" fontWeight={"normal"} as="span">{props.data.date}</Text>
+            </Box>
+            <Text as="span" fontWeight="bold" _hover={{ color: "#1A0DAB" }}>
+              {props.data.title}
+            </Text>
 
-          {/* <Text>{props.data.description}</Text>
+            {/* <Text>{props.data.description}</Text>
           {props.data.tags != null && props.data.tags.map(item => {
             return <Tag marginRight="1" key={item}>{item}</Tag>
           })} */}
-        </Container>           
+          </Container>
+        </a>
       </Link>
-    </Box>
+    </Box >
   );
 }
 
@@ -72,18 +74,18 @@ export async function getStaticProps() {
     console.log(item.data.slug)
   })
   const tagSet = contents
-                .reduce((acc:Set<string> , val) => {
-                  if (val.data.tags != null) {
-                    const tags = val.data.tags as string[];
-                    tags.forEach(item => acc.add(item));
-                  };
-                  return acc;
-                }, new Set<string>())
+    .reduce((acc: Set<string>, val) => {
+      if (val.data.tags != null) {
+        const tags = val.data.tags as string[];
+        tags.forEach(item => acc.add(item));
+      };
+      return acc;
+    }, new Set<string>())
   const tags = Array.from(tagSet);
   return {
-      props: {
-        contents,
-        tags
-      }
+    props: {
+      contents,
+      tags
+    }
   }
 }
