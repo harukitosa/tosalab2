@@ -2,7 +2,7 @@
 title: 冬の夢
 date: "2022-01-10"
 template: "post"
-draft: false
+draft: true
 slug: "book-1"
 category: "Book"
 tags:

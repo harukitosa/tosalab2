@@ -2,7 +2,7 @@
 title: 幼年期の終わりを読んだ
 date: "2022-01-10"
 template: "post"
-draft: false
+draft: true
 slug: "book-2"
 category: "Book"
 tags:
